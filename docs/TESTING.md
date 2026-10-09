@@ -114,3 +114,20 @@ A confirmação de uma ficha pela tela, o download do JSON, a largura de 390 px 
 - a leitura automática, porque as variáveis do provedor não estão configuradas;
 - a remoção da identidade depois do pedido de exclusão;
 - a largura de 390 px das telas novas de importação e privacidade.
+
+## Fase 6
+
+Em 9 de outubro de 2026:
+
+- `npm run lint`, `npx tsc --noEmit`, 49 testes Vitest e `npm run build` passaram. O teste novo cobre o link de confirmação e de nova senha quando o endereço do site termina com barra.
+- No navegador local, em 360×800, Meu Dia com a sessão antiga ficou na largura 360, sem rolagem horizontal. A barra mostrou Hoje, Devocional, Treinos, Estudos e Mais.
+- O painel Mais listou os nove destinos, inclusive Importar e Configurações. Em 360×640 o painel rola e Configurações entra na área visível.
+- A publicação `https://minha-rotina-5y177qgq2-samuasouzas-projects.vercel.app` e os aliases do projeto respondem 302 para o login da Vercel. Manifesto, instalação e service worker de produção não foram exercitados nessa origem.
+
+Não foi repetido, porque a sessão local pertence a uma conta já removida e o cadastro por e-mail continua sujeito ao limite de envio:
+
+- cadastro, confirmação de e-mail, login, logout e recuperação até a troca da senha;
+- anamnese, checklist, agenda, devocional, treinos, estudos, saúde, metas, importação, exportação e isolamento entre duas contas novas;
+- 390 px, 430 px, tablet e desktop das telas autenticadas com dados;
+- instalação do aplicativo num celular físico.
+

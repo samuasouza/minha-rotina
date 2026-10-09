@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { getAuthContext } from "@/lib/auth/session"
+import { authConfirmUrl } from "@/lib/domain/auth-links"
 import { canCompleteFromChecklist } from "@/lib/domain/progress"
 import { occursOnDate } from "@/lib/domain/recurrence"
 import type { ActionResult } from "@/lib/domain/types"
@@ -89,7 +90,7 @@ export async function signUp(input: unknown): Promise<ActionResult> {
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: `${env.siteUrl.replace(/\/$/, "")}/auth/confirm`,
+      emailRedirectTo: authConfirmUrl(env.siteUrl),
       data: { display_name: parsed.data.displayName },
     },
   })
@@ -124,7 +125,7 @@ export async function requestPasswordReset(input: unknown): Promise<ActionResult
 
   const supabase = await createClient()
   const { error } = await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-    redirectTo: `${env.siteUrl}/auth/confirm?next=/nova-senha`,
+    redirectTo: authConfirmUrl(env.siteUrl, "/nova-senha"),
   })
   if (error) {
     logOperationFailure("password_reset_failed", error)

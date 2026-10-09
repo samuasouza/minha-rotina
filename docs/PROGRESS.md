@@ -92,13 +92,33 @@ Migration aplicada nesta etapa:
 
 - `20261009221446_phase5_import_privacy`
 
+## Fase 6, homologação
+
+- O menu Mais, no celular, cabe na tela e rola quando a altura é curta. Configurações continua acessível.
+- Diálogos longos, como nova atividade, rolam dentro da tela em vez de sair dela.
+- Campos de treino, estudo, devocional e refeição encolhem ao lado do botão, sem empurrar a página para o lado.
+- Listas de seleção não passam da largura do campo.
+- O círculo de concluir uma atividade e os dias da recorrência ficaram maiores para o toque.
+- O link de recuperação de senha usa a mesma origem do cadastro, sem barra duplicada quando o endereço do site termina com `/`.
+- A área segura do celular instalado passa a valer (`viewport-fit: cover`).
+
+Nenhuma migration nova. Nenhum dado de produção foi apagado.
+
+## Validado na fase 6
+
+- `npm run lint`, `npx tsc --noEmit`, 49 testes Vitest e `npm run build` passaram.
+- Em 360 px, o cabeçalho, o aviso de conta e a barra inferior ficaram na largura da tela, sem rolagem horizontal. O menu Mais mostrou Alimentação, Cardio, Meu Corpo, Bem-estar, Agenda, Minhas Metas, Meu Perfil, Importar e Configurações. Numa altura de 640 px, Configurações aparece depois de rolar o painel.
+- A publicação na Vercel do commit anterior responde, mas o acesso público cai na autenticação da Vercel. O manifesto e a instalação no celular real não foram abertos por aqui.
+
 ## Pendente
 
-- Repetir o fluxo Cadastro → confirmação por e-mail → Login → Dashboard → persistência → Logout quando o envio de e-mail voltar a aceitar.
-- No painel Auth, conferir Site URL e Redirect URLs para o ambiente local em uso e, depois, para a origem de produção.
+- Repetir o fluxo Cadastro → confirmação por e-mail → Login → Dashboard → persistência → Logout quando o envio de e-mail voltar a aceitar. A sessão local que restou de uma conta já apagada só mostrou “Não consegui carregar agora”; não foi criada outra conta nesta etapa.
+- No painel Auth, conferir Site URL e Redirect URLs da origem de produção. O endereço publicado está atrás da proteção de acesso da Vercel.
+- Desligar essa proteção, ou publicar um domínio público, antes do teste no celular.
 - Categorias na interface.
 - Configurar `IMPORT_AI_API_KEY`, `IMPORT_AI_BASE_URL` e `IMPORT_AI_MODEL` no servidor quando a leitura de PDF, imagem e áudio for contratada.
 - Remover a identidade de quem pediu exclusão, no painel do Supabase. O aplicativo não tem a chave para isso.
+- Ligar a proteção contra senhas vazadas em Authentication → Settings → Password security.
 - Notificação push. O lembrete atual só aparece dentro do aplicativo.
 - Integração com dispositivos de saúde. A coluna `external_ref` do cardio reserva essa integração e ainda não recebe aparelho nenhum.
 - Google Calendar.

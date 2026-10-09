@@ -70,7 +70,7 @@ export function StudyView({ data }: { data: Ready }) {
           }}
         >
           <Input name="name" placeholder="Nome" />
-          <select className="h-10 rounded-xl border border-input bg-card px-2 text-sm" name="kind" defaultValue="subject">
+          <select className="h-10 w-full rounded-xl border border-input bg-card px-2 text-sm" name="kind" defaultValue="subject" aria-label="Tipo">
             <option value="subject">Matéria</option>
             <option value="course">Curso</option>
           </select>
@@ -111,7 +111,7 @@ export function StudyView({ data }: { data: Ready }) {
                   event.currentTarget.reset()
                 }}
               >
-                <Input name="title" placeholder="Conteúdo" />
+                <Input name="title" placeholder="Conteúdo" className="min-w-0 flex-1" />
                 <Button className="h-10" disabled={pending} type="submit">
                   Incluir
                 </Button>
@@ -194,7 +194,7 @@ export function StudyView({ data }: { data: Ready }) {
           ))}
         </ul>
         <form
-          className="mt-3 flex gap-2"
+          className="mt-3 flex flex-wrap gap-2"
           onSubmit={(event) => {
             event.preventDefault()
             const form = new FormData(event.currentTarget)
@@ -208,7 +208,7 @@ export function StudyView({ data }: { data: Ready }) {
             event.currentTarget.reset()
           }}
         >
-          <Input name="title" placeholder="Meta" />
+          <Input name="title" placeholder="Meta" className="min-w-0 flex-1 basis-40" />
           <Input name="minutes" placeholder="Minutos" inputMode="numeric" className="max-w-28" />
           <Button className="h-10" disabled={pending} type="submit">
             Salvar
@@ -227,7 +227,7 @@ export function StudyView({ data }: { data: Ready }) {
             event.currentTarget.reset()
           }}
         >
-          <select className="h-10 rounded-xl border border-input bg-card px-2 text-sm" name="subjectId">
+          <select className="h-10 w-full rounded-xl border border-input bg-card px-2 text-sm" name="subjectId" aria-label="Matéria">
             {data.subjects.map((subject) => (
               <option key={subject.id} value={subject.id}>
                 {subject.name}

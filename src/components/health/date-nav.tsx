@@ -7,16 +7,16 @@ export function DateNav({ base, date, today }: { base: string; date: string; tod
       <div>
         <p className="text-sm text-muted-foreground">{formatLongDate(date)}</p>
       </div>
-      <div className="flex gap-2 text-sm">
-        <Link className="underline-offset-4 hover:underline" href={`${base}?data=${addIsoDays(date, -1)}`}>
+      <div className="flex flex-wrap gap-2 text-sm">
+        <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href={`${base}?data=${addIsoDays(date, -1)}`}>
           Anterior
         </Link>
         {date !== today ? (
-          <Link className="underline-offset-4 hover:underline" href={base}>
+          <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href={base}>
             Hoje
           </Link>
         ) : null}
-        <Link className="underline-offset-4 hover:underline" href={`${base}?data=${addIsoDays(date, 1)}`}>
+        <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href={`${base}?data=${addIsoDays(date, 1)}`}>
           Próximo
         </Link>
       </div>

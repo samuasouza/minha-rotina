@@ -53,16 +53,16 @@ export function DevotionalView({ data }: { data: Ready }) {
           <p className="text-sm text-muted-foreground">{formatLongDate(data.date)}</p>
           <h1 className="mt-1 text-4xl">Devocional</h1>
         </div>
-        <div className="flex gap-2 text-sm">
-          <Link className="underline-offset-4 hover:underline" href={`/devocional?data=${addIsoDays(data.date, -1)}`}>
+        <div className="flex flex-wrap gap-2 text-sm">
+          <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href={`/devocional?data=${addIsoDays(data.date, -1)}`}>
             Anterior
           </Link>
           {data.date !== data.today ? (
-            <Link className="underline-offset-4 hover:underline" href="/devocional">
+            <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href="/devocional">
               Hoje
             </Link>
           ) : null}
-          <Link className="underline-offset-4 hover:underline" href={`/devocional?data=${addIsoDays(data.date, 1)}`}>
+          <Link className="inline-flex min-h-10 items-center underline-offset-4 hover:underline" href={`/devocional?data=${addIsoDays(data.date, 1)}`}>
             Próximo
           </Link>
         </div>
@@ -339,7 +339,7 @@ function MiniForm({ pending, label, onSubmit }: { pending: boolean; label: strin
         event.currentTarget.reset()
       }}
     >
-      <Input name="value" placeholder={label} />
+      <Input name="value" placeholder={label} className="min-w-0 flex-1" />
       <Button className="h-10" disabled={pending} type="submit">
         Salvar
       </Button>

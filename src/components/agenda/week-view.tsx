@@ -15,14 +15,14 @@ export function WeekView({ week, persistable = true }: { week: WeekData; persist
           <p className="text-sm text-muted-foreground">Semana</p>
           <h1 className="mt-1 text-4xl">Agenda</h1>
         </div>
-        <div className="flex items-center gap-2 text-sm">
-          <Link className="rounded-full border border-border bg-card px-3 py-1.5" href={`/agenda?data=${previous}`}>
+        <div className="flex flex-wrap items-center gap-2 text-sm">
+          <Link className="inline-flex min-h-10 items-center rounded-full border border-border bg-card px-3" href={`/agenda?data=${previous}`}>
             Semana anterior
           </Link>
-          <Link className="rounded-full border border-border bg-card px-3 py-1.5" href="/agenda">
+          <Link className="inline-flex min-h-10 items-center rounded-full border border-border bg-card px-3" href="/agenda">
             Esta semana
           </Link>
-          <Link className="rounded-full border border-border bg-card px-3 py-1.5" href={`/agenda?data=${next}`}>
+          <Link className="inline-flex min-h-10 items-center rounded-full border border-border bg-card px-3" href={`/agenda?data=${next}`}>
             Próxima
           </Link>
         </div>

@@ -2,6 +2,8 @@
 
 O código em `main` já está pronto para importação. Este arquivo não faz o deploy.
 
+O deploy de 9 de outubro de 2026 ficou em `https://minha-rotina-5y177qgq2-samuasouzas-projects.vercel.app` e nos aliases do projeto, todos respondendo 302 para o login da Vercel. Para o teste no celular, o ambiente Production precisa estar público, ou a proteção de acesso da Vercel precisa ser desligada. `NEXT_PUBLIC_SITE_URL` tem de ser exatamente essa origem pública.
+
 ## 1. Importar o repositório
 
 1. Entre em [vercel.com/new](https://vercel.com/new).

@@ -326,7 +326,7 @@ export function NutritionView({ data }: { data: NutritionReady }) {
                 run(() => addDietMeal({ planId: plan.id, name }))
               }}
             >
-              <Input name="name" placeholder="Nome da refeição" aria-label="Nome da refeição" />
+              <Input name="name" placeholder="Nome da refeição" aria-label="Nome da refeição" className="min-w-0 flex-1" />
               <Button type="submit" variant="outline">Adicionar</Button>
             </form>
             {plan.meals.map((meal) => (

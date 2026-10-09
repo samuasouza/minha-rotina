@@ -158,7 +158,7 @@ export function ImportExperience({
           <Button type="button" disabled={pending || text.trim().length === 0} onClick={() => void submitText()}>
             Guardar texto para revisão
           </Button>
-          <label className="inline-flex h-8 cursor-pointer items-center rounded-lg border border-border px-2.5 text-sm">
+          <label className="inline-flex h-11 cursor-pointer items-center rounded-lg border border-border px-3 text-sm">
             Enviar arquivo
             <input
               className="sr-only"

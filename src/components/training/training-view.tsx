@@ -111,16 +111,16 @@ export function TrainingView({ data, today }: { data: Ready; today: string }) {
                     )
                   }}
                 >
-                  <select className="h-10 rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId">
+                  <select className="h-10 w-full rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId" aria-label="Exercício">
                     {data.exercises.map((exercise) => (
                       <option key={exercise.id} value={exercise.id}>
                         {exercise.name}
                       </option>
                     ))}
                   </select>
-                  <Input name="position" defaultValue={day.exercises.length} inputMode="numeric" />
-                  <Input name="targetSets" defaultValue="3" inputMode="numeric" />
-                  <Input name="targetReps" placeholder="8-12" />
+                  <Input name="position" defaultValue={day.exercises.length} inputMode="numeric" aria-label="Posição" />
+                  <Input name="targetSets" defaultValue="3" inputMode="numeric" aria-label="Séries" />
+                  <Input name="targetReps" placeholder="8-12" aria-label="Repetições" />
                   <Button className="h-10" disabled={pending} type="submit">
                     Incluir
                   </Button>
@@ -136,7 +136,7 @@ export function TrainingView({ data, today }: { data: Ready; today: string }) {
                 event.currentTarget.reset()
               }}
             >
-              <Input name="name" placeholder="Nome do dia, como A ou inferiores" />
+              <Input name="name" placeholder="Nome do dia, como A ou inferiores" className="min-w-0 flex-1" aria-label="Nome do dia" />
               <Button className="h-10" disabled={pending} type="submit">
                 Dia
               </Button>
@@ -180,21 +180,21 @@ export function TrainingView({ data, today }: { data: Ready; today: string }) {
                 )
               }}
             >
-              <select className="h-10 rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId">
+              <select className="h-10 w-full rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId" aria-label="Exercício da série">
                 {data.exercises.map((exercise) => (
                   <option key={exercise.id} value={exercise.id}>
                     {exercise.name}
                   </option>
                 ))}
               </select>
-              <Input name="setNumber" defaultValue={active.sets.length + 1} inputMode="numeric" />
-              <Input name="reps" placeholder="Reps" inputMode="numeric" />
-              <Input name="loadKg" placeholder="Kg" inputMode="decimal" />
+              <Input name="setNumber" defaultValue={active.sets.length + 1} inputMode="numeric" aria-label="Número da série" />
+              <Input name="reps" placeholder="Reps" inputMode="numeric" aria-label="Repetições" />
+              <Input name="loadKg" placeholder="Kg" inputMode="decimal" aria-label="Carga em quilos" />
               <Button className="h-10" disabled={pending} type="submit">
                 Série
               </Button>
             </form>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <Button
                 disabled={pending}
                 type="button"
@@ -238,15 +238,15 @@ export function TrainingView({ data, today }: { data: Ready; today: string }) {
             )
           }}
         >
-          <select className="h-10 rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId">
+          <select className="h-10 w-full rounded-xl border border-input bg-card px-2 text-sm" name="exerciseId" aria-label="Exercício da sugestão">
             {data.exercises.map((exercise) => (
               <option key={exercise.id} value={exercise.id}>
                 {exercise.name}
               </option>
             ))}
           </select>
-          <Input name="load" placeholder="Kg sugeridos" inputMode="decimal" />
-          <Input name="note" placeholder="Motivo" />
+          <Input name="load" placeholder="Kg sugeridos" inputMode="decimal" aria-label="Carga sugerida em quilos" />
+          <Input name="note" placeholder="Motivo" aria-label="Motivo da sugestão" />
           <Button className="h-10" disabled={pending} type="submit">
             Sugerir
           </Button>
@@ -258,7 +258,7 @@ export function TrainingView({ data, today }: { data: Ready; today: string }) {
                 {item.exerciseName}: {item.suggested_load_kg} kg · {item.status}
               </span>
               {item.status === "pending" ? (
-                <span className="flex gap-2">
+                <span className="flex flex-wrap gap-2">
                   <button type="button" className="underline-offset-4 hover:underline" onClick={() => run(() => decideSuggestion({ id: item.id, decision: "accepted" }))}>
                     Aceitar
                   </button>
@@ -295,7 +295,7 @@ function Inline({ pending, placeholder, onSubmit }: { pending: boolean; placehol
         event.currentTarget.reset()
       }}
     >
-      <Input name="value" placeholder={placeholder} />
+      <Input name="value" placeholder={placeholder} className="min-w-0 flex-1" />
       <Button className="h-10" disabled={pending} type="submit">
         Salvar
       </Button>

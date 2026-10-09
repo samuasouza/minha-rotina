@@ -35,12 +35,13 @@ export const viewport: Viewport = {
   themeColor: "#F8F2EE",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 }
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="pt-BR" className={`${outfit.variable} ${fraunces.variable} h-full antialiased`}>
-      <body className="min-h-full bg-background text-foreground">
+      <body className="min-h-full overflow-x-clip bg-background text-foreground">
         {children}
         <Toaster position="top-center" theme="light" />
       </body>

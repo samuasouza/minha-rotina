@@ -135,7 +135,7 @@ export function TaskForm({ date, disabled = false }: { date: string; disabled?: 
                     type="button"
                     aria-pressed={selected}
                     className={cn(
-                      "rounded-full px-3 py-1 text-xs",
+                      "min-h-10 min-w-10 rounded-full px-3 text-sm",
                       selected ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground",
                     )}
                     onClick={() => {

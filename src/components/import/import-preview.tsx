@@ -456,7 +456,7 @@ function UnitField({ value, onChange }: { value: string; onChange: (value: strin
   return (
     <label className="grid gap-1 text-sm">
       <span>Unidade</span>
-      <select className="h-9 rounded-lg border border-border bg-background px-2" value={value} onChange={(event) => onChange(event.target.value)}>
+      <select className="h-9 w-full min-w-0 rounded-lg border border-border bg-background px-2" value={value} onChange={(event) => onChange(event.target.value)}>
         <option value="">Sem quantidade</option>
         <option value="g">g</option>
         <option value="ml">ml</option>

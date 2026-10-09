@@ -28,12 +28,12 @@ export function MobileNav() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "flex flex-col items-center gap-1 px-1 py-2 text-[11px]",
+                    "flex min-h-14 w-full flex-col items-center justify-center gap-1 px-1 py-2 text-[11px] leading-tight",
                     active ? "text-primary" : "text-muted-foreground",
                   )}
                 >
-                  <Icon className="size-4" aria-hidden="true" />
-                  {item.shortLabel}
+                  <Icon className="size-5 shrink-0" aria-hidden="true" />
+                  <span className="max-w-full truncate">{item.shortLabel}</span>
                 </Link>
               </li>
             )
@@ -41,10 +41,10 @@ export function MobileNav() {
           <li>
             <button
               type="button"
-              className="flex w-full flex-col items-center gap-1 px-1 py-2 text-[11px] text-muted-foreground"
+              className="flex min-h-14 w-full flex-col items-center justify-center gap-1 px-1 py-2 text-[11px] leading-tight text-muted-foreground"
               onClick={() => setOpen(true)}
             >
-              <Menu className="size-4" aria-hidden="true" />
+              <Menu className="size-5 shrink-0" aria-hidden="true" />
               Mais
             </button>
           </li>
@@ -52,7 +52,7 @@ export function MobileNav() {
       </nav>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="bottom" className="rounded-t-3xl">
+        <SheetContent side="bottom" className="max-h-[85dvh] overflow-y-auto rounded-t-3xl pb-[max(1rem,env(safe-area-inset-bottom))]">
           <SheetHeader>
             <SheetTitle>Mais módulos</SheetTitle>
           </SheetHeader>

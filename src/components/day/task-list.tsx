@@ -67,7 +67,7 @@ export function TaskList({ tasks, date }: { tasks: TaskView[]; date: string }) {
                 aria-label={task.status === "completed" ? `Reabrir ${task.title}` : `Concluir ${task.title}`}
                 disabled={pendingId === task.id || !canCompleteFromChecklist(task.completionPolicy)}
                 className={cn(
-                  "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border",
+                  "mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-full border",
                   task.status === "completed"
                     ? "border-primary bg-primary text-primary-foreground"
                     : "border-rose bg-card",
@@ -94,7 +94,7 @@ export function TaskList({ tasks, date }: { tasks: TaskView[]; date: string }) {
               </div>
             </div>
             {task.status === "pending" ? (
-              <div className="mt-3 flex flex-wrap gap-2 pl-9">
+              <div className="mt-3 flex flex-wrap gap-2 pl-[3.25rem]">
                 <Button variant="ghost" size="sm" onClick={() => setSkipTarget(task)}>
                   Ignorar
                 </Button>
