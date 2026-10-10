@@ -1,9 +1,10 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
+import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import { getAuthContext } from "@/lib/auth/session"
-import { authConfirmUrl } from "@/lib/domain/auth-links"
+import { authConfirmUrl, requestOriginFromHeaders, resolveAuthSiteUrl } from "@/lib/domain/auth-links"
 import { canCompleteFromChecklist } from "@/lib/domain/progress"
 import { occursOnDate } from "@/lib/domain/recurrence"
 import type { ActionResult } from "@/lib/domain/types"
@@ -57,6 +58,14 @@ function refreshOrganization() {
   revalidatePath("/configuracoes")
 }
 
+async function confirmationBase() {
+  const env = getSupabaseEnv()
+  const headerList = await headers()
+  return resolveAuthSiteUrl(env?.siteUrl, requestOriginFromHeaders(headerList))
+}
+
+const confirmationMessage = "Enviamos um link de confirmação. Abra o e-mail para entrar no seu dia."
+
 export async function signIn(input: unknown): Promise<ActionResult> {
   const parsed = signInSchema.safeParse(input)
   if (!parsed.success) {
@@ -86,11 +95,12 @@ export async function signUp(input: unknown): Promise<ActionResult> {
   }
 
   const supabase = await createClient()
+  const siteUrl = await confirmationBase()
   const { data, error } = await supabase.auth.signUp({
     email: parsed.data.email,
     password: parsed.data.password,
     options: {
-      emailRedirectTo: authConfirmUrl(env.siteUrl),
+      emailRedirectTo: authConfirmUrl(siteUrl),
       data: { display_name: parsed.data.displayName },
     },
   })
@@ -103,10 +113,13 @@ export async function signUp(input: unknown): Promise<ActionResult> {
       message: "Esse e-mail já possui uma conta. Entre com a senha.",
     }
   }
-  if (!data.session) {
+  if (!data.session || !data.user?.email_confirmed_at) {
+    if (data.session) {
+      await supabase.auth.signOut()
+    }
     return {
       ok: true,
-      message: "Enviamos um link de confirmação. Abra o e-mail para entrar no seu dia.",
+      message: confirmationMessage,
     }
   }
 
@@ -124,8 +137,9 @@ export async function requestPasswordReset(input: unknown): Promise<ActionResult
   }
 
   const supabase = await createClient()
+  const siteUrl = await confirmationBase()
   const { error } = await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-    redirectTo: authConfirmUrl(env.siteUrl, "/nova-senha"),
+    redirectTo: authConfirmUrl(siteUrl, "/nova-senha"),
   })
   if (error) {
     logOperationFailure("password_reset_failed", error)

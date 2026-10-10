@@ -1,21 +1,7 @@
 import { createServerClient } from "@supabase/ssr"
 import { NextResponse, type NextRequest } from "next/server"
+import { gateDestination } from "@/lib/auth/gate"
 import { getSupabaseEnv } from "@/lib/supabase/env"
-
-const publicPaths = [
-  "/entrar",
-  "/cadastro",
-  "/recuperar",
-  "/nova-senha",
-  "/auth",
-  "/manifest.webmanifest",
-  "/sw.js",
-  "/offline.html",
-]
-
-function isPublicPath(pathname: string) {
-  return publicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))
-}
 
 function redirectKeepingSession(url: URL, supabaseResponse: NextResponse) {
   const redirectResponse = NextResponse.redirect(url)
@@ -33,57 +19,43 @@ function redirectKeepingSession(url: URL, supabaseResponse: NextResponse) {
 
 export async function proxy(request: NextRequest) {
   const env = getSupabaseEnv()
-  if (!env) {
-    return NextResponse.next()
-  }
-
   let supabaseResponse = NextResponse.next({ request })
+  let isAuthenticated = false
 
-  const supabase = createServerClient(env.url, env.publishableKey, {
-    cookies: {
-      getAll() {
-        return request.cookies.getAll()
+  if (env) {
+    const supabase = createServerClient(env.url, env.publishableKey, {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet, headers) {
+          cookiesToSet.forEach(({ name, value }) => {
+            request.cookies.set(name, value)
+          })
+          supabaseResponse = NextResponse.next({ request })
+          cookiesToSet.forEach(({ name, value, options }) => {
+            supabaseResponse.cookies.set(name, value, options)
+          })
+          Object.entries(headers).forEach(([key, value]) => {
+            supabaseResponse.headers.set(key, value)
+          })
+        },
       },
-      setAll(cookiesToSet, headers) {
-        cookiesToSet.forEach(({ name, value }) => {
-          request.cookies.set(name, value)
-        })
-        supabaseResponse = NextResponse.next({ request })
-        cookiesToSet.forEach(({ name, value, options }) => {
-          supabaseResponse.cookies.set(name, value, options)
-        })
-        Object.entries(headers).forEach(([key, value]) => {
-          supabaseResponse.headers.set(key, value)
-        })
-      },
-    },
-  })
+    })
 
-  const { data } = await supabase.auth.getClaims()
-  const isAuthenticated = Boolean(data?.claims?.sub)
-  const { pathname } = request.nextUrl
-
-  if (!isAuthenticated && !isPublicPath(pathname)) {
-    const url = request.nextUrl.clone()
-    url.pathname = "/entrar"
-    url.search = ""
-    return redirectKeepingSession(url, supabaseResponse)
+    const { data } = await supabase.auth.getClaims()
+    isAuthenticated = Boolean(data?.claims?.sub)
   }
 
-  if (isAuthenticated && (pathname === "/entrar" || pathname === "/cadastro" || pathname === "/recuperar" || pathname === "/")) {
-    const url = request.nextUrl.clone()
-    url.pathname = "/meu-dia"
-    url.search = ""
-    return redirectKeepingSession(url, supabaseResponse)
+  const destination = gateDestination(request.nextUrl.pathname, isAuthenticated)
+  if (!destination) {
+    return supabaseResponse
   }
 
-  if (!isAuthenticated && pathname === "/") {
-    const url = request.nextUrl.clone()
-    url.pathname = "/entrar"
-    return redirectKeepingSession(url, supabaseResponse)
-  }
-
-  return supabaseResponse
+  const url = request.nextUrl.clone()
+  url.pathname = destination
+  url.search = ""
+  return redirectKeepingSession(url, supabaseResponse)
 }
 
 export const config = {

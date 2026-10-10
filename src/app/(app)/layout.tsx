@@ -15,19 +15,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 async function AuthenticatedFrame({ children }: { children: React.ReactNode }) {
   await connection()
   const account = await requireReadyAccount()
-  if (account.status === "unauthenticated") {
+  if (account.status === "unauthenticated" || account.status === "unconfigured") {
     redirect("/entrar")
   }
 
-  const displayName =
-    account.status === "ready"
-      ? account.profile.displayName
-      : account.status === "unconfigured"
-        ? null
-        : "Conta conectada"
+  const displayName = account.status === "ready" ? account.profile.displayName : "Conta conectada"
 
   return (
-    <AppShell displayName={displayName} configured={account.status !== "unconfigured"}>
+    <AppShell displayName={displayName} configured>
       {children}
     </AppShell>
   )

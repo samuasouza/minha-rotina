@@ -131,3 +131,9 @@ Não foi repetido, porque a sessão local pertence a uma conta já removida e o 
 - 390 px, 430 px, tablet e desktop das telas autenticadas com dados;
 - instalação do aplicativo num celular físico.
 
+## Acesso sem sessão
+
+A raiz e os módulos privados passam pelo proxy antes da página. Sem uma sessão válida, o destino é `/entrar`. Com sessão, `/`, `/entrar` e `/cadastro` vão para `/meu-dia`. O teste está em `src/lib/auth/gate.test.ts`.
+
+Se `NEXT_PUBLIC_SITE_URL` ainda for local, o link de confirmação usa a origem HTTPS do pedido quando ela termina em `.vercel.app`. O endereço publicado é `https://minha-rotina-lime.vercel.app`. No Supabase, a Redirect URL precisa incluir `https://minha-rotina-lime.vercel.app/auth/confirm`.
+

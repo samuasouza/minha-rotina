@@ -1,16 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async redirects() {
-    return [
-      {
-        source: "/",
-        destination: "/meu-dia",
-        permanent: false,
-      },
-    ]
-  },
-  /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
   turbopack: {

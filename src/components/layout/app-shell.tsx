@@ -37,8 +37,8 @@ export function AppShell({
                 </button>
               </form>
             ) : (
-              <Link href="/configuracoes" className="mt-2 block text-xs text-muted-foreground underline-offset-4 hover:underline">
-                Conectar conta
+              <Link href="/entrar" className="mt-2 block text-xs text-muted-foreground underline-offset-4 hover:underline">
+                Entrar
               </Link>
             )}
           </div>

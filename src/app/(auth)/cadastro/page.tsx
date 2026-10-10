@@ -17,7 +17,7 @@ export default function CadastroPage() {
       {configured ? <AuthForm mode="cadastro" /> : <StatusNotice status="unconfigured" />}
       <p className="mt-6 text-sm text-muted-foreground">
         <Link href="/entrar" className="text-foreground underline-offset-4 hover:underline">
-          Já tenho conta
+          Entrar
         </Link>
         <span aria-hidden="true"> · </span>
         <Link href="/recuperar" className="text-foreground underline-offset-4 hover:underline">

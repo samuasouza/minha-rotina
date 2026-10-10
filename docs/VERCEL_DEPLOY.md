@@ -23,7 +23,7 @@ Em Project Settings → Environment Variables, no ambiente Production:
 | --- | --- |
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://kphoehunurubkeiestsr.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | A publishable key do projeto, em Project Settings → API Keys. Começa com `sb_publishable_`. |
-| `NEXT_PUBLIC_SITE_URL` | A origem HTTPS do aplicativo, sem barra no final. Exemplo: `https://minha-rotina.vercel.app`. |
+| `NEXT_PUBLIC_SITE_URL` | A origem HTTPS do aplicativo, sem barra no final. Exemplo: `https://minha-rotina-lime.vercel.app`. |
 
 `NEXT_PUBLIC_SITE_URL` entra nos links de confirmação de e-mail e de recuperação de senha. Se ficar vazia, o código usa `http://localhost:3000` e esses links não abrem o site publicado.
 
@@ -49,7 +49,7 @@ No projeto `minha-rotina` (`kphoehunurubkeiestsr`):
 
 1. Authentication → URL Configuration.
 2. Site URL: a mesma origem de `NEXT_PUBLIC_SITE_URL`.
-3. Redirect URLs: inclua `https://SEU-DOMINIO/auth/confirm`.
+3. Redirect URLs: inclua `https://minha-rotina-lime.vercel.app/auth/confirm`.
 4. Mantenha a confirmação de e-mail ligada.
 5. Authentication → Settings → Password security: ligue a proteção contra senhas vazadas. O aplicativo não tem esse interruptor.
 

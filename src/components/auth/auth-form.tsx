@@ -118,7 +118,7 @@ function SignUpForm() {
     <CredentialForm
       pending={pending}
       notice={notice}
-      submitLabel="Criar conta"
+      submitLabel="Criar minha conta"
       onSubmit={form.handleSubmit((values) => {
         setNotice(null)
         startTransition(async () => {
