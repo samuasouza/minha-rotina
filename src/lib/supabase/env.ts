@@ -1,3 +1,5 @@
+import { siteOrigin } from "@/lib/domain/auth-links"
+
 export type SupabaseEnv = {
   url: string
   publishableKey: string
@@ -28,7 +30,7 @@ export function getSupabaseEnv(): SupabaseEnv | null {
     return null
   }
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000"
+  const siteUrl = siteOrigin(process.env.NEXT_PUBLIC_SITE_URL?.trim() || "http://localhost:3000")
 
   return { url, publishableKey, siteUrl }
 }

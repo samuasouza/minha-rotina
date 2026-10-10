@@ -1,7 +1,16 @@
+export function siteOrigin(siteUrl: string) {
+  const trimmed = siteUrl.trim()
+  try {
+    return new URL(trimmed).origin
+  } catch {
+    return trimmed.replace(/\/+$/, "").replace(/\/auth\/confirm$/, "")
+  }
+}
+
 export function authConfirmUrl(siteUrl: string, next?: string) {
-  const origin = siteUrl.trim().replace(/\/+$/, "")
-  if (!next) return `${origin}/auth/confirm`
-  return `${origin}/auth/confirm?next=${next}`
+  const confirm = new URL("/auth/confirm", `${siteOrigin(siteUrl)}/`)
+  if (!next) return confirm.toString()
+  return `${confirm.origin}${confirm.pathname}?next=${next}`
 }
 
 function hostnameOf(value: string) {
@@ -31,7 +40,7 @@ export function resolveAuthSiteUrl(configured: string | null | undefined, reques
   const fromEnv = configured?.trim().replace(/\/+$/, "") ?? ""
   const host = fromEnv ? hostnameOf(fromEnv) : null
   if (fromEnv && host && host !== "localhost" && host !== "127.0.0.1") {
-    return fromEnv
+    return siteOrigin(fromEnv)
   }
 
   const origin = requestOrigin?.trim().replace(/\/+$/, "") ?? ""
@@ -40,6 +49,11 @@ export function resolveAuthSiteUrl(configured: string | null | undefined, reques
   }
 
   return fromEnv || "http://localhost:3000"
+}
+
+export function destinationAfterConfirm(type: string | null, next: string | null) {
+  if (type === "recovery" || next === "/nova-senha") return "/nova-senha"
+  return "/meu-dia"
 }
 
 export function requestOriginFromHeaders(headerList: { get(name: string): string | null }) {

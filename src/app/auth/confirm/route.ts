@@ -1,5 +1,6 @@
 import { type EmailOtpType } from "@supabase/supabase-js"
 import { NextResponse } from "next/server"
+import { destinationAfterConfirm } from "@/lib/domain/auth-links"
 import { getSupabaseEnv } from "@/lib/supabase/env"
 import { createClient } from "@/lib/supabase/server"
 
@@ -19,8 +20,7 @@ export async function GET(request: Request) {
   const type = url.searchParams.get("type")
   const next = url.searchParams.get("next")
   const env = getSupabaseEnv()
-  const destination =
-    type === "recovery" || next === "/nova-senha" ? "/nova-senha" : "/meu-dia"
+  const destination = destinationAfterConfirm(type, next)
 
   if (!env || (!code && !tokenHash)) {
     return NextResponse.redirect(new URL("/entrar?aviso=link", url.origin))
